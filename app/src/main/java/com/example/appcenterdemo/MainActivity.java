@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Push.setListener(new MyPushListener());
-        AppCenter.start(getApplication(), "b67ecae4-ce7b-4571-aaef-96b8ca235485", Analytics.class, Crashes.class, Auth.class, Push.class, Data.class);
+        AppCenter.start(getApplication(), "097c990d-1b63-4a16-a4f6-b2bb8250983a", Analytics.class, Crashes.class, Auth.class, Push.class, Data.class);
         nameText = findViewById(R.id.userName);
         signIn();
     }
