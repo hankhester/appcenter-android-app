@@ -65,7 +65,7 @@ public class NotesActivity extends AppCompatActivity {
         final LinearLayout notesLayout = findViewById(R.id.notesLayout);
         x.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("deleting id: " + note.id);
+                System.out.println("deleting this id: " + note.id);
                 Data.delete(note.id, DefaultPartitions.USER_DOCUMENTS);
                 notesLayout.removeView(noteLayout);
             }
