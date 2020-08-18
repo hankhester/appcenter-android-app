@@ -3,24 +3,12 @@ package com.example.appcenterdemo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
-import android.icu.text.SymbolTable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.google.android.material.textfield.TextInputEditText;
-import com.microsoft.appcenter.data.Data;
-import com.microsoft.appcenter.data.DefaultPartitions;
-import com.microsoft.appcenter.data.models.DocumentWrapper;
-import com.microsoft.appcenter.data.models.PaginatedDocuments;
-import com.microsoft.appcenter.utils.async.AppCenterConsumer;
-
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
-
-import java.util.UUID;
 
 public class NotesActivity extends AppCompatActivity {
     TextInputEditText newNoteInput;
@@ -30,23 +18,6 @@ public class NotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
         newNoteInput = findViewById(R.id.newNote);
-
-        fetchNotes();
-    }
-
-    private void fetchNotes() {
-        Data.list(Note.class, DefaultPartitions.USER_DOCUMENTS).thenAccept(new AppCenterConsumer<PaginatedDocuments<Note>>() {
-            @Override
-            public void accept(PaginatedDocuments<Note> documentWrappers) {
-                try {
-                    for (DocumentWrapper<Note> dw : documentWrappers) {
-                        addNoteToUi(dw.getDeserializedValue());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     private void addNoteToUi(final Note note) {
@@ -66,7 +37,6 @@ public class NotesActivity extends AppCompatActivity {
         x.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("deleting id :" + note.id);
-                Data.delete(note.id, DefaultPartitions.USER_DOCUMENTS);
                 notesLayout.removeView(noteLayout);
             }
         });
@@ -80,6 +50,5 @@ public class NotesActivity extends AppCompatActivity {
         String noteText = newNoteInput.getText().toString();
         Note note = new Note(noteText);
         addNoteToUi(note);
-        Data.create(note.id, note, Note.class, DefaultPartitions.USER_DOCUMENTS);
     }
 }
